@@ -32,21 +32,8 @@
     </properties>
 
     <dependencies>
-        <!-- JUnit Jupiter API for writing tests -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <!-- JUnit Jupiter Engine for running tests -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- Use Spring Boot's test starter which manages JUnit/Jupiter versions -->
+        <!-- Explicit junit-jupiter dependencies removed to avoid mixing platform versions with Surefire -->
 
         <!-- Spring Boot JPA -->
         <dependency>
@@ -126,13 +113,7 @@
                     <redirectTestOutputToFile>false</redirectTestOutputToFile>
                     <useFile>false</useFile>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>5.10.0</version>
-                    </dependency>
-                </dependencies>
+                <!-- Rely on Spring Boot's managed test dependencies for JUnit to avoid classpath conflicts -->
             </plugin>
 
             <!-- Spring Boot Maven Plugin -->
