@@ -5,6 +5,13 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>org.example</groupId>
     <artifactId>midas</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -13,8 +20,10 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring.boot.version>3.2.5</spring.boot.version>
-        <spring.kafka.version>3.1.4</spring.kafka.version>
+    <!-- upgraded to Spring Boot 3.5.x as requested (use specific patch if desired) -->
+    <spring.boot.version>3.5.0</spring.boot.version>
+    <!-- align spring-kafka with the Spring Boot 3.5 stream; pick a matching 3.5.x version -->
+    <spring.kafka.version>3.5.0</spring.kafka.version>
         <testcontainers.version>1.19.1</testcontainers.version>
         <h2.version>2.2.224</h2.version>
         <maven.compiler.source>21</maven.compiler.source>
@@ -53,11 +62,10 @@
             <version>${spring.boot.version}</version>
         </dependency>
 
-        <!-- Spring Kafka -->
+        <!-- Spring Kafka - version managed by Spring Boot BOM -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>${spring.kafka.version}</version>
         </dependency>
 
         <!-- H2 Database -->
@@ -76,11 +84,10 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Kafka Test -->
+        <!-- Kafka Test - version managed by Spring Boot BOM -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
-            <version>${spring.kafka.version}</version>
             <scope>test</scope>
         </dependency>
 
