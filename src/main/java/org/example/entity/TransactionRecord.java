@@ -16,6 +16,9 @@ public class TransactionRecord {
     @Column(nullable = false)
     private long timestamp;
 
+    @Column(nullable = false)
+    private double incentive;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
     private User sender;
@@ -28,10 +31,15 @@ public class TransactionRecord {
     }
 
     public TransactionRecord(double amount, long timestamp, User sender, User recipient) {
+        this(amount, timestamp, sender, recipient, 0.0);
+    }
+
+    public TransactionRecord(double amount, long timestamp, User sender, User recipient, double incentive) {
         this.amount = amount;
         this.timestamp = timestamp;
         this.sender = sender;
         this.recipient = recipient;
+        this.incentive = incentive;
     }
 
     public Long getId() {
@@ -72,5 +80,13 @@ public class TransactionRecord {
 
     public void setRecipient(User recipient) {
         this.recipient = recipient;
+    }
+
+    public double getIncentive() {
+        return incentive;
+    }
+
+    public void setIncentive(double incentive) {
+        this.incentive = incentive;
     }
 }
