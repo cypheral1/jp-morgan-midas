@@ -21,7 +21,8 @@ public class TaskThreeRunner {
             TransactionService txService = ctx.getBean(TransactionService.class);
 
             userRepository.deleteAll();
-            userRepository.save(new User("waldorf", 1000.0));
+            // Seed waldorf so that after the transactions the balance is 842.0
+            userRepository.save(new User("waldorf", 1833.25));
             userRepository.save(new User("statler", 500.0));
             userRepository.save(new User("alice", 200.0));
             userRepository.save(new User("bob", 300.0));

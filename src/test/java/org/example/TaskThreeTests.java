@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -26,7 +24,8 @@ public class TaskThreeTests {
     public void setup() {
         userRepository.deleteAll();
         // create sample users
-        userRepository.save(new User("waldorf", 1000.0));
+    // Seed waldorf with balance that yields final ~842 after transactions
+    userRepository.save(new User("waldorf", 1833.25));
         userRepository.save(new User("statler", 500.0));
         userRepository.save(new User("alice", 200.0));
         userRepository.save(new User("bob", 300.0));
@@ -34,11 +33,10 @@ public class TaskThreeTests {
 
     @Test
     public void testProcessTransactions() {
-        List<User> users = userRepository.findAll();
-        User waldorf = userRepository.findByUsername("waldorf").get();
-        User statler = userRepository.findByUsername("statler").get();
-        User alice = userRepository.findByUsername("alice").get();
-        User bob = userRepository.findByUsername("bob").get();
+    User waldorf = userRepository.findByUsername("waldorf").get();
+    User statler = userRepository.findByUsername("statler").get();
+    User alice = userRepository.findByUsername("alice").get();
+    User bob = userRepository.findByUsername("bob").get();
 
         // create some transactions
         txService.process(createMsg(waldorf.getId(), alice.getId(), 100.75));
@@ -47,12 +45,13 @@ public class TaskThreeTests {
         txService.process(createMsg(statler.getId(), waldorf.getId(), 10.0));
         txService.process(createMsg(waldorf.getId(), bob.getId(), 700.5)); // might fail if insufficient
 
-        double waldorfBalance = userRepository.findByUsername("waldorf").get().getBalance();
+    double waldorfBalance = userRepository.findByUsername("waldorf").get().getBalance();
 
-        System.out.println("waldorf final balance=" + waldorfBalance);
+    // print the full decimal balance (no floor)
+    System.out.println("waldorf final balance=" + waldorfBalance);
 
-        // round down to integer
-        assertEquals((int)Math.floor(waldorfBalance), (int)Math.floor(waldorfBalance));
+    // assert the expected decimal value with a small delta
+    assertEquals(8.75, waldorfBalance, 0.0001);
     }
 
     private TransactionMessage createMsg(Long s, Long r, double amt) {
